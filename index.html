@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Super Tags | Clean UI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f1a; --card: #161e2d; --text: #e2e8f0; --accent: #38bdf8;
+      --border: #2d3748; --shadow: 0 10px 15px rgba(0,0,0,0.2);
+      --tech: #38bdf8; --sales: #fbbf24; --voice: #f472b6;
+    }
+    .theme-tech { --accent: var(--tech); }
+    .theme-sales { --accent: var(--sales); }
+    .theme-voice { --accent: var(--voice); }
+    .theme-all { --accent: #94a3b8; }
+    
+    * { box-sizing: border-box; transition: 0.2s ease; }
+    body { margin: 0; font-family: 'Cairo', sans-serif; color: var(--text); background: var(--bg); font-size: 13px; }
+
+    /* Header & Nav */
+    .header { background: rgba(11, 15, 26, 0.95); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border); }
+    .nav-container { max-width: 1150px; margin: 0 auto; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; }
+    .main-nav { display: flex; gap: 8px; }
+    .nav-item { cursor: pointer; padding: 6px 14px; border-radius: 8px; font-weight: 600; opacity: 0.5; }
+    .nav-item.active { opacity: 1; background: rgba(255,255,255,0.05); color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+
+    /* Search & Tools */
+    .controls { max-width: 1150px; margin: 15px auto; padding: 0 15px; display: flex; gap: 10px; }
+    .search-input { flex: 1; background: var(--card); border: 1px solid var(--border); padding: 10px 15px; border-radius: 12px; color: #fff; outline: none; }
+    .btn { background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 8px 15px; border-radius: 10px; cursor: pointer; font-size: 12px; font-weight: bold; }
+
+    /* Notes Grid */
+    .notes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; max-width: 1150px; margin: 0 auto; padding: 0 15px 100px; }
+    .note-card { 
+      background: var(--card); border-radius: 16px; border: 1px solid var(--border); padding: 16px; 
+      height: 160px; display: flex; flex-direction: column; cursor: pointer; position: relative;
+    }
+    .note-card:hover { transform: translateY(-3px); border-color: var(--accent); box-shadow: var(--shadow); }
+    .note-card h4 { margin: 0 0 6px 0; color: var(--accent); font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .note-card p { font-size: 12px; opacity: 0.7; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; flex-grow: 1; margin: 0; }
+
+    /* Footer in Card */
+    .card-footer { 
+      display: flex; justify-content: space-between; align-items: center; 
+      margin-top: 10px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.05);
+      font-size: 10px; opacity: 0.5;
+    }
+    .section-icon { background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 4px; color: var(--accent); }
+
+    /* Modal Styling */
+    .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 20px; }
+    .modal-content { background: var(--card); width: 100%; max-width: 450px; padding: 25px; border-radius: 24px; border: 1px solid var(--border); }
+    label { display: block; margin: 10px 0 5px; font-size: 11px; opacity: 0.6; }
+    input, textarea, select { width: 100%; margin-bottom: 10px; padding: 12px; border-radius: 12px; background: var(--bg); color: #fff; border: 1px solid var(--border); font-family: inherit; }
+
+    .modal-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 15px; }
+    .move-btn { flex: 1; padding: 10px; font-size: 11px; }
+
+    .fab { position: fixed; bottom: 25px; left: 25px; width: 60px; height: 60px; border-radius: 20px; background: var(--accent); color: #000; border: none; font-size: 30px; cursor: pointer; z-index: 100; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+    #toast { position: fixed; bottom: 30px; right: 30px; background: var(--accent); color: #000; padding: 10px 20px; border-radius: 12px; font-weight: bold; display: none; z-index: 3000; }
+  </style>
+</head>
+<body class="theme-all">
+
+<div id="toast">نسخ! 📋</div>
+
+<header class="header">
+  <div class="nav-container">
+    <div class="main-nav">
+      <div class="nav-item active" id="nav-all" onclick="switchSection('all')">🌈 الكل</div>
+      <div class="nav-item" id="nav-tech" onclick="switchSection('tech')">💻 Tech</div>
+      <div class="nav-item" id="nav-sales" onclick="switchSection('sales')">🏷️ Sales</div>
+      <div class="nav-item" id="nav-voice" onclick="switchSection('voice')">📞 Voice</div>
+    </div>
+    <div id="count" style="font-size: 11px; opacity: 0.5;">0 ملاحظة</div>
+  </div>
+</header>
+
+<div class="controls">
+  <input type="text" id="searchInput" class="search-input" placeholder="بحث سريع..." oninput="render()">
+  <button class="btn" onclick="exportJSON()">📤 تصدير</button>
+  <button class="btn" style="background:var(--accent); color:#000; border:none;" onclick="document.getElementById('fileInput').click()">📥 استيراد</button>
+  <input type="file" id="fileInput" hidden onchange="importFile(event)">
+</div>
+
+<div class="notes-grid" id="notesGrid"></div>
+
+<button class="fab" onclick="openModal()">+</button>
+
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <h4 style="margin:0">تعديل الملاحظة</h4>
+    
+    <label>القسم الحالي</label>
+    <select id="mainCatSelect">
+      <option value="tech">💻 Tech</option>
+      <option value="sales">🏷️ Sales</option>
+      <option value="voice">📞 Voice</option>
+    </select>
+
+    <label>العنوان</label>
+    <input id="noteTitle" placeholder="أدخل العنوان..." />
+    
+    <label>المحتوى</label>
+    <textarea id="noteBody" rows="7" placeholder="اكتب النص هنا..."></textarea>
+
+    <div class="modal-actions">
+      <button class="btn" style="background:var(--accent); color:#000; flex: 2;" onclick="saveNote()">حفظ التعديلات</button>
+      <button class="btn" style="background:#ef4444; color:#fff; border:none;" onclick="deleteNote(editingId)">حذف</button>
+      <button class="btn" onclick="closeModal()">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  let notes = JSON.parse(localStorage.getItem('clean_tags_v17') || '[]');
+  let currentView = 'all', editingId = null;
+
+  const icons = { tech: '💻', sales: '🏷️', voice: '📞' };
+
+  function switchSection(sec) {
+    currentView = sec;
+    document.body.className = 'theme-' + sec;
+    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    document.getElementById('nav-' + sec).classList.add('active');
+    render();
+  }
+
+  function render() {
+    const grid = document.getElementById('notesGrid');
+    const query = document.getElementById('searchInput').value.toLowerCase();
+    grid.innerHTML = '';
+    
+    const filtered = notes.filter(n => 
+      (currentView === 'all' || n.main === currentView) && 
+      (n.title.toLowerCase().includes(query) || n.content.toLowerCase().includes(query))
+    );
+
+    document.getElementById('count').innerText = `${filtered.length} ملاحظة`;
+
+    filtered.sort((a,b) => b.id - a.id).forEach(n => {
+      const card = document.createElement('div');
+      card.className = `note-card`;
+      card.style.borderRight = `4px solid var(--${n.main})`;
+      card.onclick = () => { navigator.clipboard.writeText(n.content); showToast("تم النسخ! ✅"); };
+      card.ondblclick = () => openModal(n.id);
+      
+      const dateStr = new Date(n.id).toLocaleDateString('ar-EG', {month:'short', day:'numeric'});
+
+      card.innerHTML = `
+        <h4 style="color:var(--${n.main})">${n.title}</h4>
+        <p>${n.content}</p>
+        <div class="card-footer">
+          <span class="section-icon">${icons[n.main]} ${n.main.toUpperCase()}</span>
+          <span>📅 ${dateStr}</span>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  function saveNote() {
+    const main = document.getElementById('mainCatSelect').value;
+    const title = document.getElementById('noteTitle').value || 'Untitled';
+    const content = document.getElementById('noteBody').value;
+    if(!content) return;
+
+    if(editingId) {
+      const idx = notes.findIndex(x => x.id === editingId);
+      notes[idx] = { ...notes[idx], main, title, content };
+      showToast("تم التحديث والنقل! 🔄");
+    } else {
+      notes.push({ id: Date.now(), main, title, content });
+      showToast("تم الحفظ! ✨");
+    }
+    localStorage.setItem('clean_tags_v17', JSON.stringify(notes));
+    closeModal(); render();
+  }
+
+  function openModal(id = null) {
+    editingId = id;
+    const n = notes.find(x => x.id === id);
+    document.getElementById('mainCatSelect').value = n ? n.main : (currentView === 'all' ? 'tech' : currentView);
+    document.getElementById('noteTitle').value = n ? n.title : '';
+    document.getElementById('noteBody').value = n ? n.content : '';
+    document.getElementById('modal').style.display = 'flex';
+  }
+
+  function importFile(event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const data = JSON.parse(e.target.result);
+        const newData = data.combos ? data.combos.map(c => ({ id: Date.now()+Math.random(), main: 'tech', title: c.keyword, content: c.snippet })) : data;
+        notes = [...notes, ...newData];
+        localStorage.setItem('clean_tags_v17', JSON.stringify(notes));
+        render();
+      } catch(err) { alert("خطأ!"); }
+    };
+    reader.readAsText(file);
+  }
+
+  function exportJSON() {
+    const blob = new Blob([JSON.stringify(notes, null, 2)], {type: 'application/json'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = 'tags_backup.json'; a.click();
+  }
+
+  function closeModal() { document.getElementById('modal').style.display = 'none'; editingId = null; }
+  function deleteNote(id) { if(id && confirm('حذف الملاحظة؟')) { notes = notes.filter(n => n.id !== id); localStorage.setItem('clean_tags_v17', JSON.stringify(notes)); closeModal(); render(); } }
+  function showToast(m) { const t = document.getElementById('toast'); t.innerText = m; t.style.display = 'block'; setTimeout(() => t.style.display='none', 1500); }
+
+  render();
+</script>
+</body>
+</html>
