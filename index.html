@@ -1,219 +1,424 @@
-<!doctype html>
-<html lang="ar" dir="rtl">
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="mainHtml">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Super Tags | Clean UI</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #0b0f1a; --card: #161e2d; --text: #e2e8f0; --accent: #38bdf8;
-      --border: #2d3748; --shadow: 0 10px 15px rgba(0,0,0,0.2);
-      --tech: #38bdf8; --sales: #fbbf24; --voice: #f472b6;
-    }
-    .theme-tech { --accent: var(--tech); }
-    .theme-sales { --accent: var(--sales); }
-    .theme-voice { --accent: var(--voice); }
-    .theme-all { --accent: #94a3b8; }
-    
-    * { box-sizing: border-box; transition: 0.2s ease; }
-    body { margin: 0; font-family: 'Cairo', sans-serif; color: var(--text); background: var(--bg); font-size: 13px; }
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Beef Aura Pro | 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #05070a; 
+            --card: rgba(15, 23, 42, 0.7); 
+            --text: #f8fafc; 
+            --accent: #ff4d00; 
+            --tech: #06b6d4; 
+            --sales: #fbbf24; 
+            --voice: #f472b6;
+            --border: rgba(255, 255, 255, 0.08);
+            --sidebar-width: 340px;
+        }
+        .theme-tech { --accent: var(--tech); }
+        .theme-sales { --accent: var(--sales); }
+        .theme-voice { --accent: var(--voice); }
+        
+        * { box-sizing: border-box; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        
+        body { 
+            margin: 0; font-family: 'Cairo', sans-serif; color: var(--text); background: var(--bg);
+            min-height: 100vh; overflow-x: hidden;
+            background-image: radial-gradient(circle at 20% 30%, rgba(255, 77, 0, 0.1), transparent 40%),
+                              radial-gradient(circle at 80% 70%, rgba(255, 153, 0, 0.05), transparent 40%);
+            background-attachment: fixed;
+        }
 
-    /* Header & Nav */
-    .header { background: rgba(11, 15, 26, 0.95); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border); }
-    .nav-container { max-width: 1150px; margin: 0 auto; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; }
-    .main-nav { display: flex; gap: 8px; }
-    .nav-item { cursor: pointer; padding: 6px 14px; border-radius: 8px; font-weight: 600; opacity: 0.5; }
-    .nav-item.active { opacity: 1; background: rgba(255,255,255,0.05); color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+        /* --- تصميم النيزك المشتعل الجديد --- */
+        .hero-section { display: flex; flex-direction: column; align-items: center; padding: 60px 20px 30px; }
+        
+        .meteor-logo-container {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+        }
 
-    /* Search & Tools */
-    .controls { max-width: 1150px; margin: 15px auto; padding: 0 15px; display: flex; gap: 10px; }
-    .search-input { flex: 1; background: var(--card); border: 1px solid var(--border); padding: 10px 15px; border-radius: 12px; color: #fff; outline: none; }
-    .btn { background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 8px 15px; border-radius: 10px; cursor: pointer; font-size: 12px; font-weight: bold; }
+        .fire-core {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, #fff 0%, #ffcc00 30%, var(--accent) 70%);
+            border-radius: 50%;
+            box-shadow: 
+                0 0 40px var(--accent),
+                0 0 80px #ff9900,
+                0 0 120px rgba(255, 77, 0, 0.4);
+            animation: flicker 0.1s infinite alternate;
+        }
 
-    /* Notes Grid */
-    .notes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; max-width: 1150px; margin: 0 auto; padding: 0 15px 100px; }
-    .note-card { 
-      background: var(--card); border-radius: 16px; border: 1px solid var(--border); padding: 16px; 
-      height: 160px; display: flex; flex-direction: column; cursor: pointer; position: relative;
-    }
-    .note-card:hover { transform: translateY(-3px); border-color: var(--accent); box-shadow: var(--shadow); }
-    .note-card h4 { margin: 0 0 6px 0; color: var(--accent); font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .note-card p { font-size: 12px; opacity: 0.7; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; flex-grow: 1; margin: 0; }
+        .main-letter {
+            position: relative;
+            z-index: 20;
+            font-size: 75px;
+            font-weight: 900;
+            color: white;
+            text-shadow: 0 0 20px rgba(0,0,0,0.5);
+            filter: drop-shadow(2px 2px 10px rgba(0,0,0,0.8));
+            animation: float 3s ease-in-out infinite;
+            user-select: none;
+        }
 
-    /* Footer in Card */
-    .card-footer { 
-      display: flex; justify-content: space-between; align-items: center; 
-      margin-top: 10px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.05);
-      font-size: 10px; opacity: 0.5;
-    }
-    .section-icon { background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 4px; color: var(--accent); }
+        .spark {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #ffcc00;
+            border-radius: 50%;
+            filter: blur(1px);
+            pointer-events: none;
+            z-index: 15;
+            animation: flyOut 1.5s linear infinite;
+        }
 
-    /* Modal Styling */
-    .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 20px; }
-    .modal-content { background: var(--card); width: 100%; max-width: 450px; padding: 25px; border-radius: 24px; border: 1px solid var(--border); }
-    label { display: block; margin: 10px 0 5px; font-size: 11px; opacity: 0.6; }
-    input, textarea, select { width: 100%; margin-bottom: 10px; padding: 12px; border-radius: 12px; background: var(--bg); color: #fff; border: 1px solid var(--border); font-family: inherit; }
+        @keyframes flicker {
+            from { transform: scale(1); opacity: 0.9; }
+            to { transform: scale(1.08); opacity: 1; }
+        }
 
-    .modal-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 15px; }
-    .move-btn { flex: 1; padding: 10px; font-size: 11px; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
 
-    .fab { position: fixed; bottom: 25px; left: 25px; width: 60px; height: 60px; border-radius: 20px; background: var(--accent); color: #000; border: none; font-size: 30px; cursor: pointer; z-index: 100; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
-    #toast { position: fixed; bottom: 30px; right: 30px; background: var(--accent); color: #000; padding: 10px 20px; border-radius: 12px; font-weight: bold; display: none; z-index: 3000; }
-  </style>
+        @keyframes flyOut {
+            0% { transform: translate(0, 0) scale(1); opacity: 1; }
+            100% { transform: translate(var(--x), var(--y)) scale(0); opacity: 0; }
+        }
+        /* ---------------------------------- */
+
+        [dir="rtl"] .sidebar { right: -360px; left: auto; border-left: 1px solid var(--border); }
+        [dir="rtl"] .sidebar.active { right: 0; }
+        [dir="ltr"] .sidebar { left: -360px; right: auto; border-right: 1px solid var(--border); }
+        [dir="ltr"] .sidebar.active { left: 0; }
+        
+        .sidebar {
+            position: fixed; top: 0; width: var(--sidebar-width); height: 100%;
+            background: rgba(10, 15, 25, 0.98); backdrop-filter: blur(35px);
+            z-index: 3000; padding: 30px 20px; display: flex; flex-direction: column;
+            box-shadow: 0 0 50px rgba(0,0,0,0.9);
+        }
+
+        header { background: rgba(5, 7, 10, 0.85); backdrop-filter: blur(20px); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border); padding: 12px 0; }
+        .nav-container { max-width: 1300px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; }
+        .main-nav { display: flex; gap: 8px; }
+        .nav-item { cursor: pointer; padding: 8px 15px; border-radius: 12px; font-weight: 700; opacity: 0.4; font-size: 13px; border: 1px solid transparent; }
+        .nav-item.active { opacity: 1; background: rgba(255,255,255,0.05); color: var(--accent); border-color: var(--accent); }
+        .lang-btn { background: var(--accent); color: #000; border: none; padding: 5px 12px; border-radius: 8px; font-weight: 900; cursor: pointer; font-size: 12px; margin: 0 10px; }
+        
+        .search-area { max-width: 1300px; margin: 20px auto; padding: 0 25px; position: relative; }
+        .search-input { width: 100%; background: var(--card); border: 1px solid var(--border); padding: 18px 30px; border-radius: 50px; color: #fff; outline: none; font-size: 16px; }
+        
+        .notes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; max-width: 1300px; margin: 0 auto; padding: 20px 25px 100px; }
+        .note-card { background: var(--card); border-radius: 25px; border: 1px solid var(--border); padding: 25px; height: 210px; display: flex; flex-direction: column; cursor: pointer; position: relative; backdrop-filter: blur(15px); }
+        .note-card.pinned { border: 2px solid var(--accent); }
+        .pin-icon { position: absolute; top: 15px; font-size: 18px; opacity: 0.2; }
+        [dir="rtl"] .pin-icon { left: 15px; } [dir="ltr"] .pin-icon { right: 15px; }
+        .pin-icon.active { opacity: 1; filter: drop-shadow(0 0 5px var(--accent)); }
+        
+        .note-card h4 { margin: 0 0 10px 0; color: var(--accent); font-size: 19px; }
+        .note-card p { font-size: 14px; opacity: 0.7; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; line-height: 1.6; }
+        
+        .action-btn { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); color: #fff; padding: 14px 20px; border-radius: 16px; margin-bottom: 10px; cursor: pointer; font-weight: 600; font-family: inherit; font-size: 13px; }
+        .action-btn:hover { background: var(--accent); color: #000; transform: translateY(-3px); }
+        
+        .fab { position: fixed; bottom: 30px; width: 75px; height: 75px; border-radius: 25px; background: var(--accent); color: #000; border: none; font-size: 40px; cursor: pointer; z-index: 100; box-shadow: 0 10px 30px rgba(255, 77, 0, 0.4); display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        [dir="rtl"] .fab { left: 30px; } [dir="ltr"] .fab { right: 30px; }
+        
+        #toast { position: fixed; top: 30px; left: 50%; transform: translateX(-50%); background: #fff; color: #000; padding: 12px 40px; border-radius: 50px; font-weight: 800; display: none; z-index: 5000; box-shadow: 0 5px 20px rgba(0,0,0,0.5); }
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; align-items: center; justify-content: center; z-index: 4000; padding: 20px; backdrop-filter: blur(10px); }
+        .modal-content { background: #0f172a; width: 100%; max-width: 500px; padding: 35px; border-radius: 35px; border: 1px solid var(--border); }
+        input, textarea, select { width: 100%; margin-bottom: 15px; padding: 15px; border-radius: 15px; background: #1e293b; color: #fff; border: 1px solid var(--border); font-family: inherit; }
+    </style>
 </head>
 <body class="theme-all">
 
-<div id="toast">نسخ! 📋</div>
+<div id="toast">تم! ✅</div>
 
-<header class="header">
-  <div class="nav-container">
-    <div class="main-nav">
-      <div class="nav-item active" id="nav-all" onclick="switchSection('all')">🌈 الكل</div>
-      <div class="nav-item" id="nav-tech" onclick="switchSection('tech')">💻 Tech</div>
-      <div class="nav-item" id="nav-sales" onclick="switchSection('sales')">🏷️ Sales</div>
-      <div class="nav-item" id="nav-voice" onclick="switchSection('voice')">📞 Voice</div>
+<aside id="sidebar" class="sidebar">
+    <div style="background: rgba(255,255,255,0.03); padding: 15px; border-radius: 20px; margin-bottom: 20px; border: 1px solid var(--border);">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; text-align: center;">
+            <div><span class="stat-val" id="stat-count" style="display: block; font-size: 20px; font-weight: 900; color: var(--accent);">0</span><span data-i18n="cards">كروت</span></div>
+            <div><span class="stat-val" id="stat-copies" style="display: block; font-size: 20px; font-weight: 900; color: var(--accent);">0</span><span data-i18n="copies">نسخ</span></div>
+        </div>
     </div>
-    <div id="count" style="font-size: 11px; opacity: 0.5;">0 ملاحظة</div>
-  </div>
+    <button class="action-btn" onclick="openPopup('export')"><span>📤 <span data-i18n="export">تصدير الذكي</span></span></button>
+    <button class="action-btn" onclick="openPopup('import')"><span>📥 <span data-i18n="import">استيراد</span></span></button>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <button class="action-btn" onclick="undo()"><span>↩️ Undo</span></button>
+        <button class="action-btn" onclick="redo()"><span>↪️ Redo</span></button>
+    </div>
+    <button class="action-btn" onclick="resetData()" style="color: #ff4d00;"><span>🗑️ <span data-i18n="reset">مسح الكل</span></span></button>
+    <button class="action-btn" onclick="cycleTheme()"><span>🎨 <span data-i18n="theme">الثيم</span></span></button>
+    <button class="action-btn" style="margin-top: auto;" onclick="toggleSidebar()"><span data-i18n="close">إغلاق</span></button>
+</aside>
+
+<header>
+    <div class="nav-container">
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="width: 35px; height: 35px; background: var(--accent); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 900; color:#000;">H</div>
+            <div style="font-weight: 900;" data-i18n="app-name">BEEF AURA</div>
+            <button class="lang-btn" onclick="toggleLanguage()" id="langSwitcher">EN</button>
+        </div>
+        <div class="main-nav">
+            <div class="nav-item active" id="nav-all" onclick="switchSection('all')" data-i18n="all">🌈 الكل</div>
+            <div class="nav-item" id="nav-tech" onclick="switchSection('tech')">💻 Tech</div>
+            <div class="nav-item" id="nav-sales" onclick="switchSection('sales')">🏷️ Sales</div>
+            <div class="nav-item" id="nav-voice" onclick="switchSection('voice')">📞 Voice</div>
+        </div>
+        <button class="action-btn" style="width: auto; margin:0;" onclick="toggleSidebar()" data-i18n="settings">⚙️ الإعدادات</button>
+    </div>
 </header>
 
-<div class="controls">
-  <input type="text" id="searchInput" class="search-input" placeholder="بحث سريع..." oninput="render()">
-  <button class="btn" onclick="exportJSON()">📤 تصدير</button>
-  <button class="btn" style="background:var(--accent); color:#000; border:none;" onclick="document.getElementById('fileInput').click()">📥 استيراد</button>
-  <input type="file" id="fileInput" hidden onchange="importFile(event)">
+<section class="hero-section">
+    <div class="meteor-logo-container" id="logoContainer">
+        <div class="fire-core"></div>
+        <div class="main-letter">H</div>
+    </div>
+    
+    <h1 style="margin: 20px 0 5px 0; font-weight: 900; letter-spacing: -1px;" data-i18n="hero-title">Beef Aura Pro</h1>
+    <p style="opacity: 0.5; font-size: 13px; margin: 0; font-weight: 600;" data-i18n="hero-sub">Moataz Atef Team | 2026</p>
+</section>
+
+<div class="search-area">
+    <input type="text" id="searchInput" class="search-input" placeholder="ابحث بسرعة..." oninput="render()">
 </div>
 
 <div class="notes-grid" id="notesGrid"></div>
 
-<button class="fab" onclick="openModal()">+</button>
+<button class="fab" onclick="openModal()">+<span style="font-size:10px; font-weight:900; margin-top:-5px;">NEW</span></button>
 
 <div class="modal" id="modal">
-  <div class="modal-content">
-    <h4 style="margin:0">تعديل الملاحظة</h4>
-    
-    <label>القسم الحالي</label>
-    <select id="mainCatSelect">
-      <option value="tech">💻 Tech</option>
-      <option value="sales">🏷️ Sales</option>
-      <option value="voice">📞 Voice</option>
-    </select>
-
-    <label>العنوان</label>
-    <input id="noteTitle" placeholder="أدخل العنوان..." />
-    
-    <label>المحتوى</label>
-    <textarea id="noteBody" rows="7" placeholder="اكتب النص هنا..."></textarea>
-
-    <div class="modal-actions">
-      <button class="btn" style="background:var(--accent); color:#000; flex: 2;" onclick="saveNote()">حفظ التعديلات</button>
-      <button class="btn" style="background:#ef4444; color:#fff; border:none;" onclick="deleteNote(editingId)">حذف</button>
-      <button class="btn" onclick="closeModal()">إلغاء</button>
+    <div class="modal-content">
+        <h2 style="color:var(--accent); margin-top:0;" data-i18n="modal-title">إدارة الكرت</h2>
+        <select id="mainCatSelect">
+            <option value="tech">💻 Tech Section</option>
+            <option value="sales">🏷️ Sales Section</option>
+            <option value="voice">📞 Voice Section</option>
+        </select>
+        <input id="noteTitle" placeholder="العنوان..." />
+        <textarea id="noteBody" rows="6" placeholder="المحتوى..."></textarea>
+        <div style="display: flex; gap: 10px;">
+            <button class="action-btn" style="flex:2; background:var(--accent); color:#000;" onclick="saveNote()"><span data-i18n="save">حفظ</span></button>
+            <button id="deleteBtn" class="action-btn" style="background:#ef4444; display:none; width: auto;" onclick="deleteNote(editingId)">🗑️</button>
+            <button class="action-btn" onclick="closeModal()" style="width: auto;"><span data-i18n="cancel">إلغاء</span></button>
+        </div>
     </div>
-  </div>
 </div>
 
+<div class="modal" id="popupModal">
+    <div class="modal-content">
+        <h2 id="popupTitle" style="color:var(--accent)">خيارات التصدير</h2>
+        <div id="popupOptions"></div>
+        <button class="action-btn" style="margin-top:20px;" onclick="closePopup()" data-i18n="close">إغلاق</button>
+    </div>
+</div>
+
+<input type="file" id="fileInput" hidden onchange="handleFileImport(event)">
+
 <script>
-  let notes = JSON.parse(localStorage.getItem('clean_tags_v17') || '[]');
-  let currentView = 'all', editingId = null;
-
-  const icons = { tech: '💻', sales: '🏷️', voice: '📞' };
-
-  function switchSection(sec) {
-    currentView = sec;
-    document.body.className = 'theme-' + sec;
-    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-    document.getElementById('nav-' + sec).classList.add('active');
-    render();
-  }
-
-  function render() {
-    const grid = document.getElementById('notesGrid');
-    const query = document.getElementById('searchInput').value.toLowerCase();
-    grid.innerHTML = '';
-    
-    const filtered = notes.filter(n => 
-      (currentView === 'all' || n.main === currentView) && 
-      (n.title.toLowerCase().includes(query) || n.content.toLowerCase().includes(query))
-    );
-
-    document.getElementById('count').innerText = `${filtered.length} ملاحظة`;
-
-    filtered.sort((a,b) => b.id - a.id).forEach(n => {
-      const card = document.createElement('div');
-      card.className = `note-card`;
-      card.style.borderRight = `4px solid var(--${n.main})`;
-      card.onclick = () => { navigator.clipboard.writeText(n.content); showToast("تم النسخ! ✅"); };
-      card.ondblclick = () => openModal(n.id);
-      
-      const dateStr = new Date(n.id).toLocaleDateString('ar-EG', {month:'short', day:'numeric'});
-
-      card.innerHTML = `
-        <h4 style="color:var(--${n.main})">${n.title}</h4>
-        <p>${n.content}</p>
-        <div class="card-footer">
-          <span class="section-icon">${icons[n.main]} ${n.main.toUpperCase()}</span>
-          <span>📅 ${dateStr}</span>
-        </div>
-      `;
-      grid.appendChild(card);
-    });
-  }
-
-  function saveNote() {
-    const main = document.getElementById('mainCatSelect').value;
-    const title = document.getElementById('noteTitle').value || 'Untitled';
-    const content = document.getElementById('noteBody').value;
-    if(!content) return;
-
-    if(editingId) {
-      const idx = notes.findIndex(x => x.id === editingId);
-      notes[idx] = { ...notes[idx], main, title, content };
-      showToast("تم التحديث والنقل! 🔄");
-    } else {
-      notes.push({ id: Date.now(), main, title, content });
-      showToast("تم الحفظ! ✨");
-    }
-    localStorage.setItem('clean_tags_v17', JSON.stringify(notes));
-    closeModal(); render();
-  }
-
-  function openModal(id = null) {
-    editingId = id;
-    const n = notes.find(x => x.id === id);
-    document.getElementById('mainCatSelect').value = n ? n.main : (currentView === 'all' ? 'tech' : currentView);
-    document.getElementById('noteTitle').value = n ? n.title : '';
-    document.getElementById('noteBody').value = n ? n.content : '';
-    document.getElementById('modal').style.display = 'flex';
-  }
-
-  function importFile(event) {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      try {
-        const data = JSON.parse(e.target.result);
-        const newData = data.combos ? data.combos.map(c => ({ id: Date.now()+Math.random(), main: 'tech', title: c.keyword, content: c.snippet })) : data;
-        notes = [...notes, ...newData];
-        localStorage.setItem('clean_tags_v17', JSON.stringify(notes));
-        render();
-      } catch(err) { alert("خطأ!"); }
+    const i18n = {
+        ar: {
+            "app-name": "BEEF AURA", "all": "🌈 الكل", "settings": "⚙️ الإعدادات", "cards": "كروت", "copies": "نسخ",
+            "export": "تصدير الذكي", "import": "استيراد", "reset": "مسح الكل", "theme": "الثيم",
+            "close": "إغلاق", "hero-title": "Beef Aura Pro", "hero-sub": "Moataz Atef Team | 2026",
+            "search": "ابحث بسرعة...", "modal-title": "إدارة الكرت", "save": "حفظ", "cancel": "إلغاء",
+            "toast-copy": "تم النسخ! 🔥"
+        },
+        en: {
+            "app-name": "BEEF AURA", "all": "🌈 All", "settings": "⚙️ Settings", "cards": "Cards", "copies": "Copies",
+            "export": "Smart Export", "import": "Import", "reset": "Reset All", "theme": "Theme",
+            "close": "Close", "hero-title": "Beef Aura Pro", "hero-sub": "Moataz Atef Team | 2026",
+            "search": "Fast Search...", "modal-title": "Manage Card", "save": "Save", "cancel": "Cancel",
+            "toast-copy": "Copied! 🔥"
+        }
     };
-    reader.readAsText(file);
-  }
 
-  function exportJSON() {
-    const blob = new Blob([JSON.stringify(notes, null, 2)], {type: 'application/json'});
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob); a.download = 'tags_backup.json'; a.click();
-  }
+    let notes = JSON.parse(localStorage.getItem('beef_aura_ultimate_26') || '[]');
+    let history = [JSON.stringify(notes)];
+    let historyStep = 0;
+    let copyTotal = parseInt(localStorage.getItem('aura_copy_counter_26') || '0');
+    let currentView = 'all', editingId = null, currentLang = localStorage.getItem('aura_lang') || 'ar';
 
-  function closeModal() { document.getElementById('modal').style.display = 'none'; editingId = null; }
-  function deleteNote(id) { if(id && confirm('حذف الملاحظة؟')) { notes = notes.filter(n => n.id !== id); localStorage.setItem('clean_tags_v17', JSON.stringify(notes)); closeModal(); render(); } }
-  function showToast(m) { const t = document.getElementById('toast'); t.innerText = m; t.style.display = 'block'; setTimeout(() => t.style.display='none', 1500); }
+    // --- وظيفة الشرر المتطاير للنيزك ---
+    function createSparks() {
+        const container = document.getElementById('logoContainer');
+        if(!container) return;
+        for(let i=0; i<6; i++) {
+            const spark = document.createElement('div');
+            spark.className = 'spark';
+            const x = (Math.random() - 0.5) * 250 + 'px';
+            const y = (Math.random() - 0.5) * 250 + 'px';
+            spark.style.setProperty('--x', x);
+            spark.style.setProperty('--y', y);
+            spark.style.left = '50%';
+            spark.style.top = '50%';
+            container.appendChild(spark);
+            setTimeout(() => spark.remove(), 1500);
+        }
+    }
+    setInterval(createSparks, 250);
 
-  render();
+    // --- بقية وظائف النظام ---
+    function toggleLanguage() {
+        currentLang = currentLang === 'ar' ? 'en' : 'ar';
+        localStorage.setItem('aura_lang', currentLang);
+        applyLanguage();
+    }
+
+    function applyLanguage() {
+        const html = document.getElementById('mainHtml');
+        html.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+        document.getElementById('langSwitcher').innerText = currentLang === 'ar' ? 'EN' : 'AR';
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            const target = el.querySelector('span') || el;
+            target.innerText = i18n[currentLang][key];
+        });
+        document.getElementById('searchInput').placeholder = i18n[currentLang]["search"];
+        render();
+    }
+
+    function saveToHistory() {
+        const state = JSON.stringify(notes);
+        if (state !== history[historyStep]) {
+            history = history.slice(0, historyStep + 1);
+            history.push(state);
+            historyStep++;
+        }
+    }
+
+    function undo() { if (historyStep > 0) { historyStep--; notes = JSON.parse(history[historyStep]); saveAndRender(); showToast("Undo ↩️"); } }
+    function redo() { if (historyStep < history.length - 1) { historyStep++; notes = JSON.parse(history[historyStep]); saveAndRender(); showToast("Redo ↪️"); } }
+
+    function saveAndRender() {
+        localStorage.setItem('beef_aura_ultimate_26', JSON.stringify(notes));
+        render();
+    }
+
+    function render() {
+        const grid = document.getElementById('notesGrid');
+        const query = document.getElementById('searchInput').value.toLowerCase();
+        grid.innerHTML = '';
+        const sorted = [...notes].sort((a,b) => (a.pinned === b.pinned) ? b.id - a.id : (a.pinned ? -1 : 1));
+        const filtered = sorted.filter(n => (currentView === 'all' || n.main === currentView) && (n.title.toLowerCase().includes(query) || n.content.toLowerCase().includes(query)));
+        
+        document.getElementById('stat-count').innerText = notes.length;
+        document.getElementById('stat-copies').innerText = copyTotal;
+
+        filtered.forEach(n => {
+            const card = document.createElement('div');
+            card.className = `note-card ${n.pinned ? 'pinned' : ''}`;
+            card.style.borderTop = `5px solid var(--${n.main})`;
+            card.onclick = () => { 
+                navigator.clipboard.writeText(n.content); 
+                copyTotal++;
+                localStorage.setItem('aura_copy_counter_26', copyTotal);
+                document.getElementById('stat-copies').innerText = copyTotal;
+                showToast(i18n[currentLang]["toast-copy"]); 
+            };
+            card.ondblclick = () => openModal(n.id);
+            card.innerHTML = `<div class="pin-icon ${n.pinned ? 'active' : ''}" onclick="togglePin(event, ${n.id})">📌</div><h4>${n.title}</h4><p>${n.content}</p>`;
+            grid.appendChild(card);
+        });
+    }
+
+    function saveNote() {
+        const title = document.getElementById('noteTitle').value || 'Untitled';
+        const content = document.getElementById('noteBody').value;
+        const main = document.getElementById('mainCatSelect').value;
+        if(!content) return;
+        if(editingId) {
+            const idx = notes.findIndex(x => x.id === editingId);
+            notes[idx] = { ...notes[idx], title, content, main };
+        } else {
+            notes.push({ id: Date.now(), title, content, main, pinned: false });
+        }
+        saveToHistory(); saveAndRender(); closeModal();
+    }
+
+    function togglePin(e, id) { e.stopPropagation(); const n = notes.find(x => x.id === id); n.pinned = !n.pinned; saveToHistory(); saveAndRender(); }
+    function deleteNote(id) { if(confirm('🗑️ متأكد من الحذف؟')) { notes = notes.filter(n => n.id !== id); saveToHistory(); saveAndRender(); closeModal(); } }
+    function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
+    function switchSection(sec) { currentView = sec; document.body.className = 'theme-'+sec; document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active')); document.getElementById('nav-'+sec).classList.add('active'); render(); }
+    function openModal(id = null) { editingId = id; const n = notes.find(x => x.id === id); document.getElementById('deleteBtn').style.display = id ? 'block' : 'none'; document.getElementById('noteTitle').value = n ? n.title : ''; document.getElementById('noteBody').value = n ? n.content : ''; document.getElementById('mainCatSelect').value = n ? n.main : 'tech'; document.getElementById('modal').style.display = 'flex'; }
+    function closeModal() { document.getElementById('modal').style.display = 'none'; }
+    function closePopup() { document.getElementById('popupModal').style.display = 'none'; }
+    function showToast(m) { const t = document.getElementById('toast'); t.innerText = m; t.style.display = 'block'; setTimeout(()=>t.style.display='none', 2000); }
+    function cycleTheme() { const th = ['all', 'tech', 'sales', 'voice']; switchSection(th[(th.indexOf(currentView)+1)%4]); }
+    function resetData() { if(confirm('⚠️ سيتم مسح كل البيانات! هل أنت متأكد؟')) { notes = []; copyTotal = 0; localStorage.clear(); saveToHistory(); saveAndRender(); } }
+
+    function openPopup(type) {
+        const div = document.getElementById('popupOptions'); div.innerHTML = '';
+        if(type === 'export') {
+            [['JSON (Full Backup)', 'json'], ['Beeftext (Combo)', 'beef'], ['Text (Readable)', 'txt'], ['Excel (CSV)', 'csv']].forEach(o => {
+                const b = document.createElement('button'); b.className = 'action-btn'; b.innerText = o[0]; b.onclick = () => { handleExport(o[1]); closePopup(); };
+                div.appendChild(b);
+            });
+        } else {
+            const b = document.createElement('button'); b.className = 'action-btn'; b.innerText = 'Choose File 📂'; b.onclick = () => document.getElementById('fileInput').click(); div.appendChild(b);
+        }
+        document.getElementById('popupModal').style.display = 'flex';
+    }
+
+    function handleExport(fmt) {
+        let content, name, type;
+        const now = new Date();
+        const timestamp = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}_${String(now.getHours()).padStart(2,'0')}-${String(now.getMinutes()).padStart(2,'0')}`;
+        
+        if(fmt === 'json') { 
+            content = JSON.stringify(notes, null, 2); 
+            name = `Aura_Backup_${timestamp}.json`; type = 'text/json'; 
+        } else if(fmt === 'beef') { 
+            content = JSON.stringify({combos: notes.map(n=>({keyword:n.title, snippet:n.content}))}, null, 2); 
+            name = `Aura_Beef_${timestamp}.btbackup`; type = 'text/json'; 
+        } else if(fmt === 'txt') {
+            content = notes.map(n => `[${n.title}]\n${n.content}\n---`).join('\n\n');
+            name = `Aura_Notes_${timestamp}.txt`; type = 'text/plain';
+        } else if(fmt === 'csv') {
+            content = "\uFEFFTitle,Content,Section\n" + notes.map(n => `"${n.title.replace(/"/g,'""')}","${n.content.replace(/"/g,'""')}","${n.main}"`).join('\n');
+            name = `Aura_Sheet_${timestamp}.csv`; type = 'text/csv;charset=utf-8;';
+        }
+
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(new Blob([content], {type}));
+        a.download = name;
+        a.click();
+        showToast(`تم التصدير: ${name}`);
+    }
+
+    function handleFileImport(e) {
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+            try {
+                const d = JSON.parse(ev.target.result);
+                notes = [...notes, ...(d.combos ? d.combos.map(c=>({id:Date.now()+Math.random(), title:c.keyword, content:c.snippet, main:'tech', pinned:false})) : d)];
+                saveToHistory(); saveAndRender(); closePopup();
+                showToast("تم الاستيراد بنجاح! ✅");
+            } catch { alert('خطأ في الملف!'); }
+        };
+        reader.readAsText(e.target.files[0]);
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') { closeModal(); closePopup(); if(document.getElementById('sidebar').classList.contains('active')) toggleSidebar(); }
+        if (e.altKey && (e.key === 'n' || e.key === 'N')) { e.preventDefault(); openModal(); }
+        if (e.ctrlKey && (e.key === 's' || e.key === 'S')) { if (document.getElementById('modal').style.display === 'flex') { e.preventDefault(); saveNote(); } }
+    });
+
+    applyLanguage();
 </script>
 </body>
 </html>
